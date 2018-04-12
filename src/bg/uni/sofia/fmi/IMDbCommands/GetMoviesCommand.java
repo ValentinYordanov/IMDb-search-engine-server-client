@@ -14,7 +14,7 @@ public class GetMoviesCommand implements Command {
         try {
             List<String> movies = StringManipulation.getMovies(stringFromBuffer);
             for (String movie : movies) {
-                IMDbSearchServer.sendBufferMessage(socketChannel, movie + NEW_LINE_MARKER, BUFFER_SIZE);
+                IMDbSearchServer.sendBufferMessage(socketChannel, movie, BUFFER_SIZE);
             }
             IMDbSearchServer.sendBufferMessage(socketChannel, END_OF_READING_MARKER, BUFFER_SIZE);
         } catch (IOException e) {

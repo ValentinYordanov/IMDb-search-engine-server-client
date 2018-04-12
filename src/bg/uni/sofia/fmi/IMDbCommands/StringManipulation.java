@@ -177,5 +177,11 @@ public class StringManipulation {
         return true;
     }
 
+    public static String getCommand(String buffer) {
+
+        String[] wordsInBuffer = buffer.split(" ");
+        return wordsInBuffer[0];
+
+    }
 
 }

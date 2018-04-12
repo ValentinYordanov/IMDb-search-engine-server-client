@@ -21,7 +21,7 @@ public class GetMoviePosterCommand implements Command {
             try {
                 nameOfMovie = StringManipulation.getName(stringFromBuffer);
             } catch (UnknownMovieName e) {
-                IMDbSearchServer.sendBufferMessage(socketChannel, e.getMessage() + NEW_LINE_MARKER + END_OF_READING_MARKER, IMAGE_BUFFER_SIZE);
+                IMDbSearchServer.sendBufferMessage(socketChannel, e.getMessage() + END_OF_READING_MARKER, IMAGE_BUFFER_SIZE);
                 return;
             }
 
@@ -34,7 +34,7 @@ public class GetMoviePosterCommand implements Command {
             }
 
             if (!FileManager.isValidMovieAfterDownload(nameOfMovie)) {
-                IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such movie!\n" + END_OF_READING_MARKER, IMAGE_BUFFER_SIZE);
+                IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such movie!" + END_OF_READING_MARKER, IMAGE_BUFFER_SIZE);
                 return;
             }
 

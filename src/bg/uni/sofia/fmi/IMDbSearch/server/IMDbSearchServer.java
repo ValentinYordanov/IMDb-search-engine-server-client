@@ -34,10 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import bg.uni.sofia.fmi.IMDbCommands.GetMovieCommand;
-import bg.uni.sofia.fmi.IMDbCommands.GetMoviePosterCommand;
-import bg.uni.sofia.fmi.IMDbCommands.GetMoviesCommand;
-import bg.uni.sofia.fmi.IMDbCommands.GetTvSeriesCommand;
+import bg.uni.sofia.fmi.IMDbCommands.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -47,28 +44,14 @@ import bg.uni.sofia.fmi.IMDbSearch.exceptions.UnknownMovieName;
 
 import java.util.stream.Collectors;
 
+import static bg.uni.sofia.fmi.IMDbCommands.Command.BUFFER_SIZE;
+import static bg.uni.sofia.fmi.IMDbCommands.Command.END_OF_READING_MARKER;
+
 public class IMDbSearchServer implements AutoCloseable {
 
-    public static final int SERVER_PORT = 4444;
-    private static final String POSTER_FOLDER = "src\\bg\\uni\\sofia\\fmi\\IMDbSearch\\server\\posters\\";
-    private static final String MOVIES_FOLDER = "src\\bg\\uni\\sofia\\fmi\\IMDbSearch\\server\\movies\\";
-    private static final String SERIES_FOLDER = "src\\bg\\uni\\sofia\\fmi\\IMDbSearch\\server\\series\\";
-    private static final String GENRE_TAG = "--genres=";
-    private static final String ACTORS_TAG = "--actors=";
-    private static final String ORDER_TAG = "--order=";
-    private static final String SEASON_TAG = "--season=";
-    private static final String FIELDS_TAG = "--fields=";
-    private static final String API_ADDRESS = "http://www.omdbapi.com/?t=";
-    private static final String API_KEY = "&apikey=3124849e";
-    private static final String FILE_EXTENSION = ".json";
-    private static final String IMAGE_EXTENSION = ".jpg";
-    private static final String END_OF_READING_MARKER = "xxx\n"; // marks when the clients has to stop reading otherwise
-    // it gets
-    // in an infinite loop
-    private static final int BUFFER_SIZE = 10000;
-    private static final int IMAGE_BUFFER_SIZE = 400000;
-    private static final String NEW_LINE_MARKER = "\n";
+    private static final int SERVER_PORT = 4444;
     private Selector selector;
+    private Map<String, Command> mapOfSupportedCommands;
 
     public IMDbSearchServer(int port) throws IOException {
 
@@ -82,6 +65,15 @@ public class IMDbSearchServer implements AutoCloseable {
         selector = Selector.open();
         ssc.register(selector, SelectionKey.OP_ACCEPT);
 
+        mapOfSupportedCommands = new HashMap<>();
+        mapOfSupportedCommands.put("get-movie", new GetMovieCommand());
+        mapOfSupportedCommands.put("get-movies", new GetMoviesCommand());
+        mapOfSupportedCommands.put("get-tv-series", new GetTvSeriesCommand());
+        mapOfSupportedCommands.put("get-movie-poster", new GetMoviePosterCommand());
+    }
+
+    public void addNewCommand(String commandName, Command command) {
+        mapOfSupportedCommands.put(commandName, command);
     }
 
     public void start() throws IOException, ParseException {
@@ -115,7 +107,7 @@ public class IMDbSearchServer implements AutoCloseable {
 
                         buffer.flip();
 
-                        String command = getCommand(whatsInsideBuffer);
+                        String command = StringManipulation.getCommand(whatsInsideBuffer);
 
                         buffer.flip();
 
@@ -140,71 +132,6 @@ public class IMDbSearchServer implements AutoCloseable {
 
     }
 
-    public void downloadInformationForMoviesFromApi(String nameOfMovie) {
-
-        String URLNameOfMovie = nameOfMovie.replaceAll(" ", "+");
-        URL url = null;
-        try {
-            url = new URL(API_ADDRESS + URLNameOfMovie + API_KEY);
-        } catch (MalformedURLException e) {
-            System.out.println("Wrong URL address");
-        }
-
-        String inputLine;
-        try (FileWriter fw = new FileWriter(MOVIES_FOLDER + nameOfMovie.toLowerCase() + FILE_EXTENSION);
-             BufferedWriter output = new BufferedWriter(fw);
-             BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()))) {
-            while ((inputLine = br.readLine()) != null) {
-                output.write(inputLine);
-            }
-        } catch (IOException e) {
-            System.out.println("There was an IOException while trying to write the API info to the file");
-        }
-
-    }
-
-    private void downloadInformationForSeriesFromApi(String seriesName, int seasonNumber) throws IOException {
-
-        final String SEASON_TAG = "&Season=";
-        String URLNameOfMovie = seriesName.replaceAll(" ", "+");
-        URL url = new URL(API_ADDRESS + URLNameOfMovie + SEASON_TAG + seasonNumber + API_KEY);
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
-
-        String inputLine;
-        FileWriter fw = new FileWriter(SERIES_FOLDER + seriesName.toLowerCase() + seasonNumber + FILE_EXTENSION);
-
-        BufferedWriter output = new BufferedWriter(fw);
-        while ((inputLine = br.readLine()) != null) {
-            output.write(inputLine);
-        }
-        br.close();
-        output.close();
-
-    }
-
-    public void downloadImage(String fileName) throws ParseException, IOException {
-
-        String posterUrl = parseJSONForMovies("Poster", fileName, MOVIES_FOLDER);
-
-        URL url = new URL(posterUrl);
-        InputStream in = new BufferedInputStream(url.openStream());
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        byte[] buf = new byte[1024];
-        int n = 0;
-        while (-1 != (n = in.read(buf))) {
-            out.write(buf, 0, n);
-        }
-        out.close();
-        in.close();
-        byte[] response = out.toByteArray();
-
-        FileOutputStream fos = new FileOutputStream(POSTER_FOLDER + fileName.toLowerCase() + IMAGE_EXTENSION);
-        fos.write(response);
-        fos.close();
-
-    }
-
     @Override
     public void close() throws Exception {
 
@@ -218,470 +145,28 @@ public class IMDbSearchServer implements AutoCloseable {
 
     }
 
-    public String getCommand(String buffer) {
 
-        String[] wordsInBuffer = buffer.split(" ");
-        return wordsInBuffer[0];
-
-    }
-
-    public String getName(String buffer) throws UnknownMovieName {
-
-        String resultName = buffer;
-        int i = 0;
-        while (resultName.charAt(i) != ' ') {
-            i++;
-        }
-        i++;
-        int startIndex = i;
-        int endIndex = resultName.length();
-        for (int j = i; j < resultName.length(); j++) {
-            if (resultName.charAt(j) == '-' && resultName.charAt(j + 1) == '-') {
-                endIndex = j - 1;
-            }
-        }
-
-        if (endIndex <= startIndex) {
-            throw new UnknownMovieName("This is not a valid movie name!");
-        }
-
-        return resultName.substring(startIndex, endIndex).replaceAll("[<>|:\"\\/?]", "_");
-    }
-
-    public boolean alreadyDownloaded(String nameOfMovie, String fileFolder) {
-
-        Path serverFolder = Paths.get(fileFolder);
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(serverFolder)) {
-            for (Path file : stream) {
-
-                if (file.getFileName().toString().toLowerCase().equals(nameOfMovie.toLowerCase() + FILE_EXTENSION)) {
-                    return true;
-                }
-
-            }
-
-        } catch (Exception e) {
-            System.out.println("There is a problem with the directory search");
-        }
-
-        return false;
-    }
-
-    public boolean alreadyDownloaded(String nameOfMovie, String fileFolder, int seasonNumber) {
-
-        Path serverFolder = Paths.get(fileFolder);
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(serverFolder)) {
-            for (Path file : stream) {
-
-                if (file.getFileName().toString().toLowerCase()
-                        .equals(nameOfMovie.toLowerCase() + seasonNumber + FILE_EXTENSION)) {
-                    return true;
-                }
-
-            }
-
-        } catch (Exception e) {
-            System.out.println("There is a problem with the directory search");
-        }
-
-        return false;
-    }
-
-    public boolean checkFields(String buffer) {
-
-        if (buffer.contains(FIELDS_TAG)) {
-            return true;
-        }
-        return false;
-
-    }
-
-    public String parseJSONForMovies(String whatToParse, String fileName, String folderType)
-            throws ParseException, IOException {
-
-        String parseResult = "";
-        JSONParser parser = new JSONParser();
-        Object obj = parser.parse(getEveryThingFromFile(fileName, folderType));
-        JSONObject jsonObj = (JSONObject) obj;
-
-        parseResult = (String) jsonObj.get(whatToParse);
-
-        return parseResult;
-    }
-
-    public List<String> parseJSONForSeries(String fileName) throws ParseException, IOException {
-
-        List<String> resultList = new ArrayList<>();
-
-        JSONParser parser = new JSONParser();
-        Object obj = parser.parse(getEveryThingFromFile(fileName, SERIES_FOLDER));
-        JSONObject jsonObj = (JSONObject) obj;
-
-        JSONArray slideContent = (JSONArray) jsonObj.get("Episodes");
-
-        Iterator i = slideContent.iterator();
-        while (i.hasNext()) {
-            JSONObject slide = (JSONObject) i.next();
-            String title = (String) slide.get("Title");
-            resultList.add(title);
-        }
-
-        return resultList;
-
-    }
-
-    public String getEveryThingFromFile(String fileName, String FolderType) throws IOException {
-
-        BufferedReader br = new BufferedReader(new FileReader(new File(FolderType + fileName + FILE_EXTENSION)));
-        String line;
-        StringBuilder result = new StringBuilder();
-        while ((line = br.readLine()) != null) {
-            result.append(line);
-        }
-        br.close();
-        return result.toString().replace("\n", "").replace("\r", "");
-    }
-
-    public String[] getFields(String message) {
-
-        int i = message.indexOf(FIELDS_TAG) + FIELDS_TAG.length();
-
-        message = message.substring(i);
-
-        String[] result = message.split(",");
-
-        return result;
-
-    }
-
-    public int getSeriesSeason(String message) {
-
-        int i = message.indexOf(SEASON_TAG) + SEASON_TAG.length();
-        message = message.substring(i);
-        return Integer.parseInt(message);
-
-    }
-
-    // Returns a list of movies according to the criteria in the message
-    public List<String> getMovies(String message) {
-
-        boolean isThereOrder = false;
-        boolean isThereGenre = false;
-        String genresCriteria = null;
-        String orderCriteria = null;
-        String[] actorsCriterias = null;
-        String[] genresCriterias = null;
-
-        List<String> resultList = new ArrayList<>();
-        Map<String, Double> resultMovies = new HashMap<>();
-
-        if (message.contains(GENRE_TAG)) {
-
-            isThereGenre = true;
-            int startIndex = message.indexOf(GENRE_TAG) + GENRE_TAG.length();
-            int endIndex = message.indexOf(ACTORS_TAG) - 1;
-
-            genresCriteria = message.substring(startIndex, endIndex);
-            genresCriterias = genresCriteria.split(",");
-
-        }
-
-        if (message.contains(ORDER_TAG)) {
-
-            isThereOrder = true;
-            int startIndex = message.indexOf(ORDER_TAG) + ORDER_TAG.length();
-            orderCriteria = message.substring(startIndex, startIndex + 3);
-
-        }
-        int startIndexForActors = message.indexOf(ACTORS_TAG) + ACTORS_TAG.length();
-        String actorsCriteria = message.substring(startIndexForActors);
-
-        actorsCriterias = actorsCriteria.split(",");
-
-        resultMovies = browseMoviesAndGetMapFromTitlesAndRatings(actorsCriterias, genresCriterias, isThereGenre);
-
-        if (isThereOrder) {
-            return putInOrder(resultMovies, orderCriteria);
-        }
-
-        resultList.addAll(resultMovies.keySet());
-
-        return resultList;
-    }
-
-    public List<String> putInOrder(Map<String, Double> map, String order) {
-
-        if (order.equals("asc")) {
-            return map.entrySet().stream().sorted((e1, e2) -> Double.compare(e1.getValue(), e2.getValue()))
-                    .map(Map.Entry::getKey).collect(Collectors.toList());
-        }
-
-        return map.entrySet().stream().sorted((e1, e2) -> Double.compare(e2.getValue(), e1.getValue()))
-                .map(Map.Entry::getKey).collect(Collectors.toList());
-
-    }
-
-    public Map<String, Double> browseMoviesAndGetMapFromTitlesAndRatings(String[] actorsCriterias,
-                                                                         String[] genresCriteria, boolean isThereGenre) {
-
-        Map<String, Double> resultMovies = new HashMap<>();
-
-        Path serverFolder = Paths.get(MOVIES_FOLDER);
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(serverFolder)) {
-            for (Path file : stream) {
-                String fileName = file.getFileName().toString().replaceAll(FILE_EXTENSION, "");
-                if (checkIfInfoMatchesTheCriteria(actorsCriterias,
-                        parseJSONForMovies("Actors", fileName, MOVIES_FOLDER))) {
-                    if (isThereGenre) {
-                        if (checkIfInfoMatchesTheCriteria(genresCriteria,
-                                parseJSONForMovies("Genre", fileName, MOVIES_FOLDER))) {
-                            String tmp = parseJSONForMovies("Title", fileName, MOVIES_FOLDER);
-                            Double rating = Double
-                                    .parseDouble(parseJSONForMovies("imdbRating", fileName, MOVIES_FOLDER));
-                            resultMovies.put(tmp, rating);
-                        }
-                    } else {
-                        String tmp = parseJSONForMovies("Title", fileName, MOVIES_FOLDER);
-                        Double rating = Double.parseDouble(parseJSONForMovies("imdbRating", fileName, MOVIES_FOLDER));
-                        resultMovies.put(tmp, rating);
-                    }
-                }
-            }
-        } catch (IOException | ParseException e) {
-            System.out.println("There was a problem while putting movies into order");
-        }
-
-        return resultMovies;
-    }
-
-    public boolean checkIfInfoMatchesTheCriteria(String[] criterias, String JSONinfo) {
-
-        JSONinfo = JSONinfo.toLowerCase();
-
-        for (String actor : criterias) {
-            if (actor.charAt(0) == ' ') {
-                actor = actor.substring(1);
-            }
-
-            if (!JSONinfo.contains(actor.toLowerCase())) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public boolean isValidMovieAfterDownload(String nameOfMovie) throws IOException, ParseException {
-
-        if (getEveryThingFromFile(nameOfMovie, MOVIES_FOLDER).contains("Error")) {
-            if (parseJSONForMovies("Error", nameOfMovie, MOVIES_FOLDER).equals("Movie not found!")) {
-
-                File currentFile = new File(MOVIES_FOLDER + nameOfMovie + FILE_EXTENSION);
-                currentFile.delete();
-
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public boolean isValidSeriesAfterDownload(String nameOfSeries, int seasonNumber)
+    void commandOperator(String stringFromBuffer, String commandName, SocketChannel socketChannel, ByteBuffer buffer)
             throws IOException, ParseException {
 
-        nameOfSeries = nameOfSeries.toLowerCase() + seasonNumber;
-        if (getEveryThingFromFile(nameOfSeries, SERIES_FOLDER).contains("Error")) {
-            if (parseJSONForMovies("Error", nameOfSeries, SERIES_FOLDER).equals("Series or season not found!")) {
-
-                File currentFile = new File(SERIES_FOLDER + nameOfSeries + FILE_EXTENSION);
-                currentFile.delete();
-
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private void getMovieCommand(String whatsInsideBuffer, SocketChannel socketChannel)
-            throws IOException, ParseException {
-
-        String nameOfMovie;
-        try {
-            nameOfMovie = getName(whatsInsideBuffer);
-        } catch (UnknownMovieName e) {
-            sendBufferMessage(socketChannel, e.getMessage() + NEW_LINE_MARKER + END_OF_READING_MARKER, BUFFER_SIZE);
-            return;
-        }
-
-        if (!alreadyDownloaded(nameOfMovie, MOVIES_FOLDER)) {
-            try {
-                downloadInformationForMoviesFromApi(nameOfMovie);
-            } catch (Exception e) {
-                System.out.println("Problem with connecting to the api and downloading information");
-            }
-        }
-
-        if (!isValidMovieAfterDownload(nameOfMovie)) {
-            sendBufferMessage(socketChannel, "There is no such movie!\n" + END_OF_READING_MARKER, BUFFER_SIZE);
-            return;
-        }
-
-        if (!checkFields(whatsInsideBuffer)) {
-
-            String message = getEveryThingFromFile(nameOfMovie, MOVIES_FOLDER) + NEW_LINE_MARKER
-                    + END_OF_READING_MARKER;
-            sendBufferMessage(socketChannel, message, BUFFER_SIZE);
+        if(mapOfSupportedCommands.get(commandName) == null) {
+            IMDbSearchServer.sendBufferMessage(socketChannel, "Invalid command, please try again!", BUFFER_SIZE);
+            IMDbSearchServer.sendBufferMessage(socketChannel, END_OF_READING_MARKER, BUFFER_SIZE);
         } else {
-
-            String[] fields = getFields(whatsInsideBuffer);
-            for (String field : fields) {
-                String message = null;
-                try {
-                    message = parseJSONForMovies(field, nameOfMovie, MOVIES_FOLDER) + NEW_LINE_MARKER;
-                } catch (ParseException e) {
-
-                    sendBufferMessage(socketChannel,
-                            "There was a problem, please try again" + NEW_LINE_MARKER + END_OF_READING_MARKER,
-                            BUFFER_SIZE);
-                    break;
-
-                }
-                sendBufferMessage(socketChannel, message, BUFFER_SIZE);
-
-            }
-
-            sendBufferMessage(socketChannel, END_OF_READING_MARKER, BUFFER_SIZE);
+            mapOfSupportedCommands.get(commandName).run(stringFromBuffer, socketChannel);
         }
-
     }
 
-    private void getMoviesCommand(String whatsInsideBuffer, SocketChannel sc) throws IOException {
-
-        List<String> movies = getMovies(whatsInsideBuffer);
-        for (String movie : movies) {
-            sendBufferMessage(sc, movie + NEW_LINE_MARKER, BUFFER_SIZE);
-        }
-        sendBufferMessage(sc, END_OF_READING_MARKER, BUFFER_SIZE);
-
-    }
-
-    private void getTvSeriesCommand(String whatsInsideBuffer, SocketChannel sc) throws IOException, ParseException {
-
-        String nameOfSeries;
-        try {
-            nameOfSeries = getName(whatsInsideBuffer);
-        } catch (UnknownMovieName e) {
-            sendBufferMessage(sc, e.getMessage() + NEW_LINE_MARKER + END_OF_READING_MARKER, BUFFER_SIZE);
-            return;
-        }
-
-        int seasonNumber = getSeriesSeason(whatsInsideBuffer);
-
-        if (!alreadyDownloaded(nameOfSeries, SERIES_FOLDER, seasonNumber)) {
-            downloadInformationForSeriesFromApi(nameOfSeries, seasonNumber);
-        }
-
-        if (!isValidSeriesAfterDownload(nameOfSeries, seasonNumber)) {
-            sendBufferMessage(sc, "There is no such series!\n" + END_OF_READING_MARKER, BUFFER_SIZE);
-            return;
-        }
-
-        List<String> listOfEpisodes;
-        try {
-            listOfEpisodes = new ArrayList<>(parseJSONForSeries(nameOfSeries + getSeriesSeason(whatsInsideBuffer)));
-        } catch (ParseException e1) {
-
-            sendBufferMessage(sc, "There was a problem, please try again\n" + END_OF_READING_MARKER, BUFFER_SIZE);
-            return;
-
-        }
-
-        for (String episode : listOfEpisodes) {
-            sendBufferMessage(sc, episode + NEW_LINE_MARKER, BUFFER_SIZE);
-        }
-
-        sendBufferMessage(sc, END_OF_READING_MARKER, BUFFER_SIZE);
-
-    }
-
-    public void getMoviePosterCommand(String whatsInsideBuffer, SocketChannel socketChannel)
-            throws IOException, ParseException {
-
-        String nameOfMovie;
-        try {
-            nameOfMovie = getName(whatsInsideBuffer);
-        } catch (UnknownMovieName e) {
-            sendBufferMessage(socketChannel, e.getMessage() + NEW_LINE_MARKER + END_OF_READING_MARKER, IMAGE_BUFFER_SIZE);
-            return;
-        }
-
-        if (!alreadyDownloaded(nameOfMovie, MOVIES_FOLDER)) {
-            try {
-                downloadInformationForMoviesFromApi(nameOfMovie);
-            } catch (Exception e) {
-                System.out.println("Problem with connecting to the api and downloading information");
-            }
-        }
-
-        if (!isValidMovieAfterDownload(nameOfMovie)) {
-            sendBufferMessage(socketChannel, "There is no such movie!\n" + END_OF_READING_MARKER, IMAGE_BUFFER_SIZE);
-            return;
-        }
-
-        downloadImage(nameOfMovie);
-
-        byte[] nameBytes = (nameOfMovie.toLowerCase() + IMAGE_EXTENSION + NEW_LINE_MARKER).getBytes("UTF-8");
-        sendBufferMessage(socketChannel, nameBytes, IMAGE_BUFFER_SIZE);
-
-        InputStream initialStream = new FileInputStream(
-                new File(POSTER_FOLDER + nameOfMovie.toLowerCase() + IMAGE_EXTENSION));
-        byte[] imageBuffer = new byte[initialStream.available()];
-        initialStream.read(imageBuffer);
-
-        sendBufferMessage(socketChannel, imageBuffer, IMAGE_BUFFER_SIZE);
-        initialStream.close();
-
-    }
-
-    void commandOperator(String stringFromBuffer, String command, SocketChannel socketChannel, ByteBuffer buffer)
-            throws IOException, ParseException {
-
-        switch (command) {
-            case "get-movie":
-                //getMovieCommand(whatsInsideBuffer, socketChannel);
-
-                GetMovieCommand getMovieCommand = new GetMovieCommand();
-                getMovieCommand.run(stringFromBuffer, socketChannel);
-
-                break;
-            case "get-movies":
-                //getMoviesCommand(whatsInsideBuffer, socketChannel);
-
-                GetMoviesCommand getMoviesCommand = new GetMoviesCommand();
-                getMoviesCommand.run(stringFromBuffer, socketChannel);
-
-                break;
-            case "get-tv-series":
-                //getTvSeriesCommand(whatsInsideBuffer, socketChannel);
-
-                GetTvSeriesCommand getTvSeriesCommand = new GetTvSeriesCommand();
-                getTvSeriesCommand.run(stringFromBuffer, socketChannel);
-
-                break;
-            case "get-movie-poster":
-                //getMoviePosterCommand(whatsInsideBuffer, socketChannel);
-
-                GetMoviePosterCommand getMoviePosterCommand = new GetMoviePosterCommand();
-                getMoviePosterCommand.run(stringFromBuffer, socketChannel);
-
-                break;
-        }
-
-    }
+    /*
+    * SENDING TOO MUCH WHITE SPACES, MUST FIX!
+    *
+    *
+    *
+    * */
 
     public static void sendBufferMessage(SocketChannel socketChannel, String message, int bufferSize) throws IOException {
 
+        message = message + '\n';
         ByteBuffer buffer = ByteBuffer.allocate(bufferSize);
         buffer.clear();
         buffer.flip();

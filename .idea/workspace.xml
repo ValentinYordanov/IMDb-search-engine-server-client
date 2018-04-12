@@ -2,45 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8ea93af2-e484-4547-9fb7-c50bdfa32b90" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Tests/JUnitTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/JUnitTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/2 fast 2 furious.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/IMDbSearchClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/oblivion.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/saw.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/titanic.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMovieCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMovieCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviePosterCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviePosterCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviesCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviesCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetTvSeriesCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetTvSeriesCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/StringManipulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/StringManipulation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/IMDbSearchClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/IMDbSearchClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/IMDbSearchServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/IMDbSearchServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/2 fast 2 furious.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/baby boss.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/fast &amp; furious.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/forever my girl.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/harry potter and the chamber of secrets.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/harry potter and the deathly hallows_ part 1.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/harry potter and the deathly hallows_ part 2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/harry potter and the goblet of fire.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/harry potter and the prisoner of azkaban.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/harry potter and the sorcerer's stone.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/oblivion.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/saw.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/swiss army man.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/the fast and the furious.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/the fast and the furious_ tokyo drift.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/the shape of water.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/movies/titanic.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/posters/2 fast 2 furious.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/posters/forever my girl2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/posters/oblivion.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/posters/saw.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/posters/titanic.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/series/friends4.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/series/friends5.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/series/game of thrones1.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/series/game of thrones2.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/series/game of thrones3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/series/game of thrones4.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/series/game of thrones5.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/series/game of thrones7.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/series/merlin1.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/series/merlin3.json" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -55,8 +25,24 @@
       <file leaf-file-name="IMDbSearchServer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/IMDbSearchServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-814">
-              <caret line="646" column="48" selection-start-line="646" selection-start-column="48" selection-end-line="646" selection-end-column="48" />
+            <state relative-caret-position="200">
+              <caret line="160" column="46" selection-start-line="160" selection-start-column="46" selection-end-line="160" selection-end-column="46" />
+              <folding>
+                <element signature="e#2444#2445#0" expanded="true" />
+                <element signature="e#2481#2482#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IMDbSearchClient.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/IMDbSearchClient.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="663">
+              <caret line="63" selection-start-line="63" selection-end-line="63" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -64,8 +50,8 @@
       <file leaf-file-name="GetMoviePosterCommand.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviePosterCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="680">
-              <caret line="40" column="24" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="24" />
+            <state relative-caret-position="241">
+              <caret line="23" column="81" selection-start-line="23" selection-start-column="81" selection-end-line="23" selection-end-column="81" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -76,8 +62,8 @@
       <file leaf-file-name="GetMovieCommand.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMovieCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+            <state relative-caret-position="17">
+              <caret line="43" column="13" lean-forward="true" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -88,8 +74,20 @@
       <file leaf-file-name="GetTvSeriesCommand.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetTvSeriesCommand.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="748">
-              <caret line="50" column="40" selection-start-line="50" selection-start-column="40" selection-end-line="50" selection-end-column="40" />
+            <state relative-caret-position="1260">
+              <caret line="70" column="73" selection-start-line="70" selection-start-column="73" selection-end-line="70" selection-end-column="73" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GetMoviesCommand.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviesCommand.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" column="71" selection-start-line="16" selection-start-column="71" selection-end-line="16" selection-end-column="71" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -112,8 +110,8 @@
       <file leaf-file-name="StringManipulation.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/StringManipulation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1462">
-              <caret line="149" column="17" selection-start-line="149" selection-start-column="17" selection-end-line="149" selection-end-column="17" />
+            <state relative-caret-position="428">
+              <caret line="179" column="17" selection-start-line="179" selection-start-column="17" selection-end-line="179" selection-end-column="17" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -163,15 +161,16 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/IMDbSearchClient.java" />
         <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/Command.java" />
         <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/StringManipulationCommands.java" />
-        <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMovieCommand.java" />
-        <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetTvSeriesCommand.java" />
-        <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/StringManipulation.java" />
-        <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviesCommand.java" />
         <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/FileManager.java" />
+        <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/StringManipulation.java" />
+        <option value="$PROJECT_DIR$/Tests/JUnitTests.java" />
+        <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/IMDbSearchClient.java" />
+        <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviesCommand.java" />
+        <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMovieCommand.java" />
         <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviePosterCommand.java" />
+        <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetTvSeriesCommand.java" />
         <option value="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/IMDbSearchServer.java" />
       </list>
     </option>
@@ -236,6 +235,22 @@
             <path>
               <item name="IMDb-search-engine-server-client" type="b2602c69:ProjectViewProjectNode" />
               <item name="IMDb-search-engine-server-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="fmi" type="462c0819:PsiDirectoryNode" />
+              <item name="IMDbSearch" type="462c0819:PsiDirectoryNode" />
+              <item name="client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IMDb-search-engine-server-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IMDb-search-engine-server-client" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="fmi" type="462c0819:PsiDirectoryNode" />
+              <item name="IMDbSearch" type="462c0819:PsiDirectoryNode" />
+              <item name="server" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="IMDb-search-engine-server-client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="IMDb-search-engine-server-client" type="462c0819:PsiDirectoryNode" />
               <item name="Tests" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -272,7 +287,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.IMDbSearchClient">
+  <component name="RunManager" selected="Application.IMDbSearchServer">
     <configuration name="IMDbSearchClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="bg.uni.sofia.fmi.IMDbSearch.client.IMDbSearchClient" />
       <module name="IMDb-search-engine-server-client" />
@@ -358,16 +373,15 @@
       <option name="presentableId" value="Default" />
       <updated>1523556388868</updated>
       <workItem from="1523556393277" duration="163000" />
-      <workItem from="1523556673952" duration="9248000" />
+      <workItem from="1523556673952" duration="12364000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9411000" />
+    <option name="totallyTimeSpent" value="12527000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -415,6 +429,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="629">
           <caret line="37" column="34" lean-forward="true" selection-start-line="37" selection-start-column="34" selection-end-line="37" selection-end-column="34" />
+          <folding>
+            <element signature="e#2444#2445#0" expanded="true" />
+            <element signature="e#2481#2482#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -425,67 +443,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Tests/JUnitTests.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="49" lean-forward="true" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/Command.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/IMDbSearchClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="96" column="57" selection-start-line="96" selection-start-column="57" selection-end-line="96" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMovieCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetTvSeriesCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="50" column="40" selection-start-line="50" selection-start-column="40" selection-end-line="50" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviesCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="79" selection-start-line="14" selection-start-column="79" selection-end-line="14" selection-end-column="79" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/StringManipulation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1462">
-          <caret line="149" column="17" selection-start-line="149" selection-start-column="17" selection-end-line="149" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -499,10 +460,70 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/StringManipulation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="179" column="17" selection-start-line="179" selection-start-column="17" selection-end-line="179" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/JUnitTests.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1445">
+          <caret line="85" column="2" selection-start-line="85" selection-start-column="2" selection-end-line="85" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#6702#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviesCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="71" selection-start-line="16" selection-start-column="71" selection-end-line="16" selection-end-column="71" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/IMDbSearchClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="63" selection-start-line="63" selection-end-line="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMovieCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="43" column="13" lean-forward="true" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviePosterCommand.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="680">
-          <caret line="40" column="24" selection-start-line="40" selection-start-column="24" selection-end-line="40" selection-end-column="24" />
+        <state relative-caret-position="241">
+          <caret line="23" column="81" selection-start-line="23" selection-start-column="81" selection-end-line="23" selection-end-column="81" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetTvSeriesCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1260">
+          <caret line="70" column="73" selection-start-line="70" selection-start-column="73" selection-end-line="70" selection-end-column="73" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -511,8 +532,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/server/IMDbSearchServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-814">
-          <caret line="646" column="48" selection-start-line="646" selection-start-column="48" selection-end-line="646" selection-end-column="48" />
+        <state relative-caret-position="200">
+          <caret line="160" column="46" selection-start-line="160" selection-start-column="46" selection-end-line="160" selection-end-column="46" />
+          <folding>
+            <element signature="e#2444#2445#0" expanded="true" />
+            <element signature="e#2481#2482#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -533,7 +558,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited />
+          <last-edited>No facets are configured</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

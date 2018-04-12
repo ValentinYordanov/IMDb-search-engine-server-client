@@ -20,7 +20,7 @@ public class GetTvSeriesCommand implements Command {
             nameOfSeries = StringManipulation.getName(stringFromBuffer);
         } catch (UnknownMovieName e) {
             try {
-                IMDbSearchServer.sendBufferMessage(socketChannel, e.getMessage() + NEW_LINE_MARKER + END_OF_READING_MARKER, BUFFER_SIZE);
+                IMDbSearchServer.sendBufferMessage(socketChannel, e.getMessage() + END_OF_READING_MARKER, BUFFER_SIZE);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -39,7 +39,7 @@ public class GetTvSeriesCommand implements Command {
 
         try {
             if (!FileManager.isValidSeriesAfterDownload(nameOfSeries, seasonNumber)) {
-                IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such series!\n" + END_OF_READING_MARKER, BUFFER_SIZE);
+                IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such series!" + END_OF_READING_MARKER, BUFFER_SIZE);
                 return;
             }
         } catch (IOException e) {
@@ -58,7 +58,7 @@ public class GetTvSeriesCommand implements Command {
         } catch (ParseException e1) {
 
             try {
-                IMDbSearchServer.sendBufferMessage(socketChannel, "There was a problem, please try again\n" + END_OF_READING_MARKER, BUFFER_SIZE);
+                IMDbSearchServer.sendBufferMessage(socketChannel, "There was a problem, please try again" + END_OF_READING_MARKER, BUFFER_SIZE);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -68,7 +68,7 @@ public class GetTvSeriesCommand implements Command {
 
         for (String episode : listOfEpisodes) {
             try {
-                IMDbSearchServer.sendBufferMessage(socketChannel, episode + NEW_LINE_MARKER, BUFFER_SIZE);
+                IMDbSearchServer.sendBufferMessage(socketChannel, episode, BUFFER_SIZE);
             } catch (IOException e) {
                 e.printStackTrace();
             }

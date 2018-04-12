@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.nio.channels.SocketChannel;
 /*
 * TO DO:
-*   REFACTOR MULTIPLE TRY/CATCHES
+*   REFACTOR MULTIPLE TRY/CATCH
 *
 *
 * */
@@ -22,7 +22,7 @@ public class GetMovieCommand implements Command {
             nameOfMovie = StringManipulation.getName(stringFromBuffer);
         } catch (UnknownMovieName e) {
             try {
-                IMDbSearchServer.sendBufferMessage(socketChannel, e.getMessage() + NEW_LINE_MARKER + END_OF_READING_MARKER, BUFFER_SIZE);
+                IMDbSearchServer.sendBufferMessage(socketChannel, e.getMessage() + END_OF_READING_MARKER, BUFFER_SIZE);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -39,7 +39,7 @@ public class GetMovieCommand implements Command {
 
         try {
             if (!FileManager.isValidMovieAfterDownload(nameOfMovie)) {
-                IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such movie!\n" + END_OF_READING_MARKER, BUFFER_SIZE);
+                IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such movie!" + END_OF_READING_MARKER, BUFFER_SIZE);
                 return;
             }
         } catch (IOException e) {
@@ -73,7 +73,7 @@ public class GetMovieCommand implements Command {
 
                     try {
                         IMDbSearchServer.sendBufferMessage(socketChannel,
-                                "There was a problem, please try again" + NEW_LINE_MARKER + END_OF_READING_MARKER,
+                                "There was a problem, please try again" + END_OF_READING_MARKER,
                                 BUFFER_SIZE);
                     } catch (IOException e1) {
                         e1.printStackTrace();

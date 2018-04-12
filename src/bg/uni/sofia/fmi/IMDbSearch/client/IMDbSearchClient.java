@@ -16,11 +16,11 @@ import java.util.Set;
 
 public class IMDbSearchClient {
 
-    private static final Set<String> listOfCommands = Set.of("get-movie", "get-movies", "get-tv-series",
-            "get-movie-poster");
+   // private static final Set<String> listOfCommands = Set.of("get-movie", "get-movies", "get-tv-series",
+     //       "get-movie-poster");
     public static final int SERVER_PORT = 4444;
     public static final String IMAGE_EXTENSION = ".jpg";
-    private static final String CLIENT_FOLDER = /*"C:\\Users\\valen\\Desktop\\Java\\Java Project\\IMDbSearchEngine\\*/"src\\bg\\uni\\sofia\\fmi\\IMDbSearch\\client\\";
+    private static final String CLIENT_FOLDER = "src\\bg\\uni\\sofia\\fmi\\IMDbSearch\\client\\";
     private static final int IMAGE_BUFFER_SIZE = 400000;
     private static final String END_OF_READING = "xxx";
 
@@ -59,14 +59,9 @@ public class IMDbSearchClient {
         String inputLine = null;
         String[] listOfWords;
         System.out.println("Enter command, please");
-        while (true) {
             inputLine = sc.nextLine();
             listOfWords = inputLine.split(" ");
-            if (listOfCommands.contains(listOfWords[0])) {
-                break;
-            }
-            System.out.println("Invalid command, please try again!");
-        }
+
         return inputLine;
 
     }
