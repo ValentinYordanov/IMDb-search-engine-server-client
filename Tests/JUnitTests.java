@@ -2,7 +2,6 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -29,8 +28,8 @@ public class JUnitTests {
 		String[] actorsCriteria = {"Daniel Radcliffe"};
 		String[] genreCriteria = {"Drama"};
 		
-		assertTrue("assert valid movie", server.checkIfValidMovieAfterDownload("titanic"));
-		assertTrue("assert valid series", server.checkIfValidSeriesAfterDownload("friends", 5));
+		assertTrue("assert valid movie", server.isValidMovieAfterDownload("titanic"));
+		assertTrue("assert valid series", server.isValidSeriesAfterDownload("friends", 5));
 		assertNotNull(new UnknownMovieName("hello"));
 		assertTrue("match criteria test", server.checkIfInfoMatchesTheCriteria(testString,"Leonardo Di Caprio,Emma Watson, James"));
 		assertFalse("should not match criteria", server.checkIfInfoMatchesTheCriteria(testString,"James, Paul"));
@@ -55,15 +54,15 @@ public class JUnitTests {
 	
 	@Test(expected=UnknownMovieName.class)
 	public void exceptionInvoked() throws IOException, ParseException, UnknownMovieName {
-		assertFalse(server.checkIfValidMovieAfterDownload("tutanic"));
-		assertFalse(server.checkIfValidSeriesAfterDownload("game of throne", 5));
+		assertFalse(server.isValidMovieAfterDownload("tutanic"));
+		assertFalse(server.isValidSeriesAfterDownload("game of throne", 5));
 		assertTrue("get name right", server.getName("get-movie --fields=Actors,Year,Released").equals("titanic"));
 	}
 	
 	@Test
 	public void voidTests() throws ParseException, IOException {
 		
-		server.connectToApiAndDownloadInformationForMovies("forever my girl");
+		server.downloadInformationForMoviesFromApi("forever my girl");
 		server.downloadImage("forever my girl");
 		File f = new File("C:\\Users\\valen\\Desktop\\Java\\Java Project\\IMDbSearchEngine\\src\\bg\\uni\\sofia\\fmi\\IMDbSearch\\server\\posters\\forever my girl.jpg");
 		assertTrue("image download test", f.exists());
