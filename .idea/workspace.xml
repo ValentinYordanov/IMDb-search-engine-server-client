@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8ea93af2-e484-4547-9fb7-c50bdfa32b90" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMovieCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMovieCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviePosterCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetMoviePosterCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetTvSeriesCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/GetTvSeriesCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/StringManipulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbCommands/StringManipulation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,11 +30,8 @@
       <file leaf-file-name="IMDbSearchClient.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/IMDbSearchClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="3" selection-start-column="3" selection-end-column="3" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="187">
+              <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -195,7 +188,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="100" />
     <option name="y" value="20" />
     <option name="width" value="1400" />
@@ -385,15 +378,16 @@
       <updated>1523556388868</updated>
       <workItem from="1523556393277" duration="163000" />
       <workItem from="1523556673952" duration="12364000" />
-      <workItem from="1523602739886" duration="6589000" />
+      <workItem from="1523602739886" duration="6856000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19116000" />
+    <option name="totallyTimeSpent" value="19383000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -452,9 +446,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1071">
           <caret line="63" selection-start-line="63" selection-end-line="63" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -636,11 +627,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/bg/uni/sofia/fmi/IMDbSearch/client/IMDbSearchClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="3" selection-start-column="3" selection-end-column="3" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="187">
+          <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
         </state>
       </provider>
     </entry>
