@@ -6,12 +6,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
-/*
-* TO DO:
-*   REFACTOR MULTIPLE TRY/CATCH
-*
-*
-* */
+
 public class GetMovieCommand implements Command {
 
     @Override
@@ -21,81 +16,58 @@ public class GetMovieCommand implements Command {
         try {
             nameOfMovie = StringManipulation.getName(stringFromBuffer);
         } catch (UnknownMovieName e) {
-            try {
-                IMDbSearchServer.sendBufferMessage(socketChannel, e.getMessage() + END_OF_READING_MARKER, BUFFER_SIZE);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            IMDbSearchServer.sendBufferMessage(socketChannel, e.getMessage());
+            IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
             return;
         }
 
+
         if (!FileManager.alreadyDownloaded(nameOfMovie, MOVIES_FOLDER)) {
-            try {
-                FileManager.downloadInformationForMoviesFromApi(nameOfMovie);
-            } catch (Exception e) {
-                System.out.println("Problem with connecting to the api and downloading information");
-            }
+            FileManager.downloadInformationForMoviesFromApi(nameOfMovie);
         }
 
         try {
             if (!FileManager.isValidMovieAfterDownload(nameOfMovie)) {
-                IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such movie!" + END_OF_READING_MARKER, BUFFER_SIZE);
+                IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such movie!");
+                IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
                 return;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (!StringManipulation.checkIfHaveFields(stringFromBuffer)) {
+
+        if (!StringManipulation.haveFields(stringFromBuffer)) {
 
             String message = null;
             try {
-                message = FileManager.getEveryThingFromFile(nameOfMovie, MOVIES_FOLDER) + NEW_LINE_MARKER
-                        + END_OF_READING_MARKER;
+                message = FileManager.getEveryThingFromFile(nameOfMovie, MOVIES_FOLDER);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            try {
-                IMDbSearchServer.sendBufferMessage(socketChannel, message, BUFFER_SIZE);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            IMDbSearchServer.sendBufferMessage(socketChannel, message);
+            IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
         } else {
 
             String[] fields = StringManipulation.getFields(stringFromBuffer);
             for (String field : fields) {
                 String message = null;
                 try {
-                    message = StringManipulation.parseJSONForMovies(field, nameOfMovie, MOVIES_FOLDER) + NEW_LINE_MARKER;
+                    message = StringManipulation.parseJSONForMovies(field, nameOfMovie, MOVIES_FOLDER);
                 } catch (ParseException e) {
-
-                    try {
-                        IMDbSearchServer.sendBufferMessage(socketChannel,
-                                "There was a problem, please try again" + END_OF_READING_MARKER,
-                                BUFFER_SIZE);
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
+                    e.printStackTrace();
                     break;
-
                 } catch (IOException e) {
                     e.printStackTrace();
+                    break;
                 }
-                try {
-                    IMDbSearchServer.sendBufferMessage(socketChannel, message, BUFFER_SIZE);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                IMDbSearchServer.sendBufferMessage(socketChannel, message);
 
             }
 
-            try {
-                IMDbSearchServer.sendBufferMessage(socketChannel, END_OF_READING_MARKER, BUFFER_SIZE);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
         }
 
     }

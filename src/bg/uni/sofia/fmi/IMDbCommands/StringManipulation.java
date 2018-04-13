@@ -72,7 +72,7 @@ public class StringManipulation {
 
     }
 
-    public static boolean checkIfHaveFields(String buffer) {
+    public static boolean haveFields(String buffer) {
 
         if (buffer.contains(FIELDS_TAG)) {
             return true;
@@ -103,8 +103,8 @@ public class StringManipulation {
 
     public static List<String> getMovies(String message) {
 
-        boolean isThereOrder = false;
-        boolean isThereGenre = false;
+        boolean isThereOrderCriteria = false;
+        boolean isThereGenreCriteria = false;
         String genresCriteria = null;
         String orderCriteria = null;
         String[] actorsCriterias = null;
@@ -115,7 +115,7 @@ public class StringManipulation {
 
         if (message.contains(GENRE_TAG)) {
 
-            isThereGenre = true;
+            isThereGenreCriteria = true;
             int startIndex = message.indexOf(GENRE_TAG) + GENRE_TAG.length();
             int endIndex = message.indexOf(ACTORS_TAG) - 1;
 
@@ -126,7 +126,7 @@ public class StringManipulation {
 
         if (message.contains(ORDER_TAG)) {
 
-            isThereOrder = true;
+            isThereOrderCriteria = true;
             int startIndex = message.indexOf(ORDER_TAG) + ORDER_TAG.length();
             orderCriteria = message.substring(startIndex, startIndex + 3);
 
@@ -136,9 +136,9 @@ public class StringManipulation {
 
         actorsCriterias = actorsCriteria.split(",");
 
-        resultMovies = FileManager.browseMoviesAndGetMapFromTitlesAndRatings(actorsCriterias, genresCriterias, isThereGenre);
+        resultMovies = FileManager.browseMoviesAndGetMapFromTitlesAndRatings(actorsCriterias, genresCriterias, isThereGenreCriteria);
 
-        if (isThereOrder) {
+        if (isThereOrderCriteria) {
             return putInOrder(resultMovies, orderCriteria);
         }
 

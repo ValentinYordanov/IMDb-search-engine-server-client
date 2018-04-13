@@ -56,7 +56,6 @@ public class FileManager {
     }
 
 
-
     public static void downloadInformationForMoviesFromApi(String nameOfMovie) {
 
         String URLNameOfMovie = nameOfMovie.replaceAll(" ", "+");
@@ -65,7 +64,7 @@ public class FileManager {
         try {
             url = new URL(API_ADDRESS + URLNameOfMovie + API_KEY);
         } catch (MalformedURLException e) {
-            System.out.println("Wrong URL address");
+            System.err.println("Wrong URL address");
         }
 
         String inputLine;
@@ -76,7 +75,7 @@ public class FileManager {
                 output.write(inputLine);
             }
         } catch (IOException e) {
-            System.out.println("There was an IOException while trying to write the API info to the file");
+            System.err.println("There was an IOException while trying to write the API info to the file");
         }
 
     }
@@ -135,18 +134,22 @@ public class FileManager {
 
     public static String getEveryThingFromFile(String fileName, String FolderType) throws IOException {
 
-        BufferedReader br = new BufferedReader(new FileReader(new File(FolderType + fileName + FILE_EXTENSION)));
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(new File(FolderType + fileName + FILE_EXTENSION)));
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found");
+        }
         String line;
         StringBuilder result = new StringBuilder();
         while ((line = br.readLine()) != null) {
             result.append(line);
         }
-        br.close();
         return result.toString().replace("\n", "").replace("\r", "");
     }
 
     public static Map<String, Double> browseMoviesAndGetMapFromTitlesAndRatings(String[] actorsCriterias,
-                                                                         String[] genresCriteria, boolean isThereGenre) {
+                                                                                String[] genresCriteria, boolean isThereGenre) {
 
         Map<String, Double> resultMovies = new HashMap<>();
 

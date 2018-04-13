@@ -16,8 +16,6 @@ import java.util.Set;
 
 public class IMDbSearchClient {
 
-   // private static final Set<String> listOfCommands = Set.of("get-movie", "get-movies", "get-tv-series",
-     //       "get-movie-poster");
     public static final int SERVER_PORT = 4444;
     public static final String IMAGE_EXTENSION = ".jpg";
     private static final String CLIENT_FOLDER = "src\\bg\\uni\\sofia\\fmi\\IMDbSearch\\client\\";
@@ -28,12 +26,12 @@ public class IMDbSearchClient {
         try (Socket s = new Socket("localhost", port);
              BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()))) {
 
-            Scanner sc = new Scanner(System.in);
+            Scanner scanner = new Scanner(System.in);
 
             while (true) {
                 PrintWriter pw = new PrintWriter(s.getOutputStream());
                 String line_tmp;
-                line_tmp = commandReader(sc);
+                line_tmp = commandReader(scanner);
                 pw.print(line_tmp);
                 pw.flush();
 
@@ -59,9 +57,7 @@ public class IMDbSearchClient {
         String inputLine = null;
         String[] listOfWords;
         System.out.println("Enter command, please");
-            inputLine = sc.nextLine();
-            listOfWords = inputLine.split(" ");
-
+        inputLine = sc.nextLine();
         return inputLine;
 
     }

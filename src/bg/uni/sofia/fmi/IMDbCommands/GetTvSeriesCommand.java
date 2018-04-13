@@ -19,11 +19,8 @@ public class GetTvSeriesCommand implements Command {
         try {
             nameOfSeries = StringManipulation.getName(stringFromBuffer);
         } catch (UnknownMovieName e) {
-            try {
-                IMDbSearchServer.sendBufferMessage(socketChannel, e.getMessage() + END_OF_READING_MARKER, BUFFER_SIZE);
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            IMDbSearchServer.sendBufferMessage(socketChannel, e.getMessage());
+            IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
             return;
         }
 
@@ -39,7 +36,8 @@ public class GetTvSeriesCommand implements Command {
 
         try {
             if (!FileManager.isValidSeriesAfterDownload(nameOfSeries, seasonNumber)) {
-                IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such series!" + END_OF_READING_MARKER, BUFFER_SIZE);
+                IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such series!");
+                IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
                 return;
             }
         } catch (IOException e) {
@@ -57,28 +55,18 @@ public class GetTvSeriesCommand implements Command {
             }
         } catch (ParseException e1) {
 
-            try {
-                IMDbSearchServer.sendBufferMessage(socketChannel, "There was a problem, please try again" + END_OF_READING_MARKER, BUFFER_SIZE);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            IMDbSearchServer.sendBufferMessage(socketChannel, "There was a problem, please try again");
+            IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
             return;
 
         }
 
         for (String episode : listOfEpisodes) {
-            try {
-                IMDbSearchServer.sendBufferMessage(socketChannel, episode, BUFFER_SIZE);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            IMDbSearchServer.sendBufferMessage(socketChannel, episode);
+
         }
 
-        try {
-            IMDbSearchServer.sendBufferMessage(socketChannel, END_OF_READING_MARKER, BUFFER_SIZE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
 
 
     }

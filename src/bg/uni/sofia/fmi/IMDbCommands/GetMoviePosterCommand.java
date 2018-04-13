@@ -21,7 +21,8 @@ public class GetMoviePosterCommand implements Command {
             try {
                 nameOfMovie = StringManipulation.getName(stringFromBuffer);
             } catch (UnknownMovieName e) {
-                IMDbSearchServer.sendBufferMessage(socketChannel, e.getMessage() + END_OF_READING_MARKER, IMAGE_BUFFER_SIZE);
+                IMDbSearchServer.sendBufferMessage(socketChannel, e.getMessage());
+                IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
                 return;
             }
 
@@ -34,25 +35,26 @@ public class GetMoviePosterCommand implements Command {
             }
 
             if (!FileManager.isValidMovieAfterDownload(nameOfMovie)) {
-                IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such movie!" + END_OF_READING_MARKER, IMAGE_BUFFER_SIZE);
+                IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such movie!");
+                IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
                 return;
             }
 
             FileManager.downloadImage(nameOfMovie);
 
             byte[] nameBytes = (nameOfMovie.toLowerCase() + IMAGE_EXTENSION + NEW_LINE_MARKER).getBytes("UTF-8");
-            IMDbSearchServer.sendBufferMessage(socketChannel, nameBytes, IMAGE_BUFFER_SIZE);
+            IMDbSearchServer.sendBufferMessage(socketChannel, nameBytes);
 
             InputStream initialStream = new FileInputStream(
                     new File(POSTER_FOLDER + nameOfMovie.toLowerCase() + IMAGE_EXTENSION));
             byte[] imageBuffer = new byte[initialStream.available()];
             initialStream.read(imageBuffer);
 
-            IMDbSearchServer.sendBufferMessage(socketChannel, imageBuffer, IMAGE_BUFFER_SIZE);
+            IMDbSearchServer.sendBufferMessage(socketChannel, imageBuffer);
             initialStream.close();
         } catch (ParseException exc) {
 
-    } catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

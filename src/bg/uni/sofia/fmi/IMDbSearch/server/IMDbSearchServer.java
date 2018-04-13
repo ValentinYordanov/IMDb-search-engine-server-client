@@ -46,6 +46,7 @@ import java.util.stream.Collectors;
 
 import static bg.uni.sofia.fmi.IMDbCommands.Command.BUFFER_SIZE;
 import static bg.uni.sofia.fmi.IMDbCommands.Command.END_OF_READING_MARKER;
+import static bg.uni.sofia.fmi.IMDbCommands.Command.IMAGE_BUFFER_SIZE;
 
 public class IMDbSearchServer implements AutoCloseable {
 
@@ -149,39 +150,54 @@ public class IMDbSearchServer implements AutoCloseable {
     void commandOperator(String stringFromBuffer, String commandName, SocketChannel socketChannel, ByteBuffer buffer)
             throws IOException, ParseException {
 
-        if(mapOfSupportedCommands.get(commandName) == null) {
-            IMDbSearchServer.sendBufferMessage(socketChannel, "Invalid command, please try again!", BUFFER_SIZE);
-            IMDbSearchServer.sendBufferMessage(socketChannel, END_OF_READING_MARKER, BUFFER_SIZE);
+        if (mapOfSupportedCommands.get(commandName) == null) {
+            IMDbSearchServer.sendBufferMessage(socketChannel, "Invalid command, please try again!");
+            IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
         } else {
             mapOfSupportedCommands.get(commandName).run(stringFromBuffer, socketChannel);
         }
     }
 
-    /*
-    * SENDING TOO MUCH WHITE SPACES, MUST FIX!
-    *
-    *
-    *
-    * */
-
-    public static void sendBufferMessage(SocketChannel socketChannel, String message, int bufferSize) throws IOException {
+    public static void sendBufferMessage(SocketChannel socketChannel, String message) {
 
         message = message + '\n';
-        ByteBuffer buffer = ByteBuffer.allocate(bufferSize);
+        ByteBuffer buffer = ByteBuffer.allocate(BUFFER_SIZE);
         buffer.clear();
         buffer.flip();
         buffer = ByteBuffer.wrap((message).getBytes());
-        socketChannel.write(buffer);
+        try {
+            socketChannel.write(buffer);
+        } catch (IOException e) {
+            System.err.print("Error trying to write to the buffer");
+        }
 
     }
 
-    public static void sendBufferMessage(SocketChannel sc, byte[] message, int bufferSize) throws IOException {
+    public static void sendEndOfReadingMessage(SocketChannel socketChannel) {
 
-        ByteBuffer buffer = ByteBuffer.allocate(bufferSize);
+        ByteBuffer buffer = ByteBuffer.allocate(BUFFER_SIZE);
+        buffer.clear();
+        buffer.flip();
+        buffer = ByteBuffer.wrap((END_OF_READING_MARKER).getBytes());
+        try {
+            socketChannel.write(buffer);
+        } catch (IOException e) {
+            System.err.print("Error trying to write to the buffer");
+        }
+
+    }
+
+    public static void sendBufferMessage(SocketChannel sc, byte[] message) {
+
+        ByteBuffer buffer = ByteBuffer.allocate(IMAGE_BUFFER_SIZE);
         buffer.clear();
         buffer.flip();
         buffer = ByteBuffer.wrap(message);
-        sc.write(buffer);
+        try {
+            sc.write(buffer);
+        } catch (IOException e) {
+            System.err.print("Error trying to write to the image buffer");
+        }
 
     }
 
