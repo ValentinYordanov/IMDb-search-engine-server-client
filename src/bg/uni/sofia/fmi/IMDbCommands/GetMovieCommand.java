@@ -22,12 +22,12 @@ public class GetMovieCommand implements Command {
         }
 
 
-        if (!FileManager.alreadyDownloaded(nameOfMovie, MOVIES_FOLDER)) {
+        if (!CheckerCommands.alreadyDownloaded(nameOfMovie, MOVIES_FOLDER)) {
             FileManager.downloadInformationForMoviesFromApi(nameOfMovie);
         }
 
         try {
-            if (!FileManager.isValidMovieAfterDownload(nameOfMovie)) {
+            if (!CheckerCommands.isValidMovieAfterDownload(nameOfMovie)) {
                 IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such movie!");
                 IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
                 return;
@@ -39,7 +39,7 @@ public class GetMovieCommand implements Command {
         }
 
 
-        if (!StringManipulation.haveFields(stringFromBuffer)) {
+        if (!CheckerCommands.haveFields(stringFromBuffer)) {
 
             String message = null;
             try {

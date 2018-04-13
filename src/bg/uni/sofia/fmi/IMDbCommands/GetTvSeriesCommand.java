@@ -26,7 +26,7 @@ public class GetTvSeriesCommand implements Command {
 
         int seasonNumber = StringManipulation.getSeriesSeason(stringFromBuffer);
 
-        if (!FileManager.alreadyDownloaded(nameOfSeries, SERIES_FOLDER, seasonNumber)) {
+        if (!CheckerCommands.alreadyDownloaded(nameOfSeries, SERIES_FOLDER, seasonNumber)) {
             try {
                 FileManager.downloadInformationForSeriesFromApi(nameOfSeries, seasonNumber);
             } catch (IOException e) {
@@ -35,7 +35,7 @@ public class GetTvSeriesCommand implements Command {
         }
 
         try {
-            if (!FileManager.isValidSeriesAfterDownload(nameOfSeries, seasonNumber)) {
+            if (!CheckerCommands.isValidSeriesAfterDownload(nameOfSeries, seasonNumber)) {
                 IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such series!");
                 IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
                 return;

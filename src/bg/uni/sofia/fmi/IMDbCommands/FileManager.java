@@ -16,46 +16,6 @@ import static bg.uni.sofia.fmi.IMDbCommands.Command.*;
 
 public class FileManager {
 
-    public static boolean alreadyDownloaded(String nameOfMovie, String fileFolder) {
-
-        Path serverFolder = Paths.get(fileFolder);
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(serverFolder)) {
-            for (Path file : stream) {
-
-                if (file.getFileName().toString().toLowerCase().equals(nameOfMovie.toLowerCase() + FILE_EXTENSION)) {
-                    return true;
-                }
-
-            }
-
-        } catch (Exception e) {
-            System.out.println("There is a problem with the directory search");
-        }
-
-        return false;
-    }
-
-    public static boolean alreadyDownloaded(String nameOfMovie, String fileFolder, int seasonNumber) {
-
-        Path serverFolder = Paths.get(fileFolder);
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(serverFolder)) {
-            for (Path file : stream) {
-
-                if (file.getFileName().toString().toLowerCase()
-                        .equals(nameOfMovie.toLowerCase() + seasonNumber + FILE_EXTENSION)) {
-                    return true;
-                }
-
-            }
-
-        } catch (Exception e) {
-            System.out.println("There is a problem with the directory search");
-        }
-
-        return false;
-    }
-
-
     public static void downloadInformationForMoviesFromApi(String nameOfMovie) {
 
         String URLNameOfMovie = nameOfMovie.replaceAll(" ", "+");
@@ -100,38 +60,6 @@ public class FileManager {
 
     }
 
-    public static boolean isValidMovieAfterDownload(String nameOfMovie) throws IOException, ParseException {
-
-        if (getEveryThingFromFile(nameOfMovie, MOVIES_FOLDER).contains("Error")) {
-            if (StringManipulation.parseJSONForMovies("Error", nameOfMovie, MOVIES_FOLDER).equals("Movie not found!")) {
-
-                File currentFile = new File(MOVIES_FOLDER + nameOfMovie + FILE_EXTENSION);
-                currentFile.delete();
-
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public static boolean isValidSeriesAfterDownload(String nameOfSeries, int seasonNumber)
-            throws IOException, ParseException {
-
-        nameOfSeries = nameOfSeries.toLowerCase() + seasonNumber;
-        if (getEveryThingFromFile(nameOfSeries, SERIES_FOLDER).contains("Error")) {
-            if (StringManipulation.parseJSONForMovies("Error", nameOfSeries, SERIES_FOLDER).equals("Series or season not found!")) {
-
-                File currentFile = new File(SERIES_FOLDER + nameOfSeries + FILE_EXTENSION);
-                currentFile.delete();
-
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public static String getEveryThingFromFile(String fileName, String FolderType) throws IOException {
 
         BufferedReader br = null;
@@ -157,10 +85,10 @@ public class FileManager {
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(serverFolder)) {
             for (Path file : stream) {
                 String fileName = file.getFileName().toString().replaceAll(FILE_EXTENSION, "");
-                if (StringManipulation.checkIfInfoMatchesTheCriteria(actorsCriterias,
+                if (CheckerCommands.checkIfInfoMatchesTheCriteria(actorsCriterias,
                         StringManipulation.parseJSONForMovies("Actors", fileName, MOVIES_FOLDER))) {
                     if (isThereGenre) {
-                        if (StringManipulation.checkIfInfoMatchesTheCriteria(genresCriteria,
+                        if (CheckerCommands.checkIfInfoMatchesTheCriteria(genresCriteria,
                                 StringManipulation.parseJSONForMovies("Genre", fileName, MOVIES_FOLDER))) {
                             String tmp = StringManipulation.parseJSONForMovies("Title", fileName, MOVIES_FOLDER);
                             Double rating = Double

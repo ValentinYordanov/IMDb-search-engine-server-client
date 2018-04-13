@@ -72,15 +72,6 @@ public class StringManipulation {
 
     }
 
-    public static boolean haveFields(String buffer) {
-
-        if (buffer.contains(FIELDS_TAG)) {
-            return true;
-        }
-        return false;
-
-    }
-
     public static String[] getFields(String message) {
 
         int i = message.indexOf(FIELDS_TAG) + FIELDS_TAG.length();
@@ -157,24 +148,6 @@ public class StringManipulation {
         return map.entrySet().stream().sorted((e1, e2) -> Double.compare(e2.getValue(), e1.getValue()))
                 .map(Map.Entry::getKey).collect(Collectors.toList());
 
-    }
-
-
-    public static boolean checkIfInfoMatchesTheCriteria(String[] criterias, String JSONinfo) {
-
-        JSONinfo = JSONinfo.toLowerCase();
-
-        for (String actor : criterias) {
-            if (actor.charAt(0) == ' ') {
-                actor = actor.substring(1);
-            }
-
-            if (!JSONinfo.contains(actor.toLowerCase())) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     public static String getCommand(String buffer) {

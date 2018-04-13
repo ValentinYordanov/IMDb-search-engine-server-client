@@ -26,7 +26,7 @@ public class GetMoviePosterCommand implements Command {
                 return;
             }
 
-            if (!FileManager.alreadyDownloaded(nameOfMovie, MOVIES_FOLDER)) {
+            if (!CheckerCommands.alreadyDownloaded(nameOfMovie, MOVIES_FOLDER)) {
                 try {
                     FileManager.downloadInformationForMoviesFromApi(nameOfMovie);
                 } catch (Exception e) {
@@ -34,7 +34,7 @@ public class GetMoviePosterCommand implements Command {
                 }
             }
 
-            if (!FileManager.isValidMovieAfterDownload(nameOfMovie)) {
+            if (!CheckerCommands.isValidMovieAfterDownload(nameOfMovie)) {
                 IMDbSearchServer.sendBufferMessage(socketChannel, "There is no such movie!");
                 IMDbSearchServer.sendEndOfReadingMessage(socketChannel);
                 return;
